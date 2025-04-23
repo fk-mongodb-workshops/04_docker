@@ -1,0 +1,2 @@
+docker cp db_stats.js shard_mongosh:/db_stats.js
+docker exec shard_mongosh /usr/local/bin/mongosh mongodb://shard1_database1:27017,shard1_database2:27017,shard1_database3:27017/?replicaSet=rs1 --file /db_stats.js

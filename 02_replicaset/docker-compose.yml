@@ -1,0 +1,45 @@
+name: mongodb_replicaset
+
+services:
+
+  mongosh:
+    image: alpine/mongosh
+    container_name: replicaset_mongosh
+    command: tail -f /dev/null
+    networks:
+      - mongodb_network
+
+  database1:
+    image: mongodb/mongodb-enterprise-server:8.0.5-ubuntu2204
+    container_name: replicaset_mongodb1
+    command: --bind_ip_all --replSet rs1
+    volumes:
+      - mongodb_vol1:/data/db
+    networks:
+      - mongodb_network
+
+  database2:
+    image: mongodb/mongodb-enterprise-server:8.0.5-ubuntu2204
+    container_name: replicaset_mongodb2
+    command: --bind_ip_all --replSet rs1
+    volumes:
+      - mongodb_vol2:/data/db
+    networks:
+      - mongodb_network
+
+  database3:
+    image: mongodb/mongodb-enterprise-server:8.0.5-ubuntu2204
+    container_name: replicaset_mongodb3
+    command: --bind_ip_all --replSet rs1
+    volumes:
+      - mongodb_vol3:/data/db
+    networks:
+      - mongodb_network
+
+networks:
+  mongodb_network:
+
+volumes:
+  mongodb_vol1:
+  mongodb_vol2:
+  mongodb_vol3:

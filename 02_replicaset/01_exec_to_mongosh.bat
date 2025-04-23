@@ -1,0 +1,1 @@
+docker exec -it replicaset_mongosh /bin/bash

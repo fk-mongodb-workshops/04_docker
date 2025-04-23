@@ -1,0 +1,1 @@
+docker exec -it shard_mongosh /bin/bash

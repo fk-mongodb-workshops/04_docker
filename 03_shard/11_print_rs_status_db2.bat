@@ -1,0 +1,2 @@
+docker cp rs_status.js shard_mongosh:/rs_status.js
+docker exec shard_mongosh /usr/local/bin/mongosh mongodb://shard2_database1:27017,shard2_database2:27017,shard2_database3:27017/?replicaSet=rs2 --file /rs_status.js

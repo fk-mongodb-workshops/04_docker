@@ -1,0 +1,1 @@
+docker exec -it standalone_mongosh /bin/bash

@@ -1,0 +1,2 @@
+sh.addShardToZone("rs1", "TIER1")
+sh.addShardToZone("rs2", "TIER2")

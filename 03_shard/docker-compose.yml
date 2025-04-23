@@ -1,0 +1,116 @@
+name: mongodb_shard
+
+services:
+
+  mongosh:
+    image: alpine/mongosh
+    container_name: shard_mongosh
+    command: tail -f /dev/null
+    networks:
+      - mongodb_network
+
+  config1: 
+    image: mongodb/mongodb-enterprise-server:8.0.5-ubuntu2204
+    container_name: shard_mongodb_cfg1
+    command: mongod --configsvr --bind_ip_all --replSet cfg1 --port 27017
+    volumes:
+      - mongodb_vol_cfg1:/data/db
+    networks:
+      - mongodb_network
+
+  config2: 
+    image: mongodb/mongodb-enterprise-server:8.0.5-ubuntu2204
+    container_name: shard_mongodb_cfg2
+    command: mongod --configsvr --bind_ip_all --replSet cfg1 --port 27017
+    volumes:
+      - mongodb_vol_cfg2:/data/db
+    networks:
+      - mongodb_network
+
+  config3: 
+    image: mongodb/mongodb-enterprise-server:8.0.5-ubuntu2204
+    container_name: shard_mongodb_cfg3
+    command: mongod --configsvr --bind_ip_all --replSet cfg1 --port 27017
+    volumes:
+      - mongodb_vol_cfg3:/data/db
+    networks:
+      - mongodb_network
+
+  shard1_database1:
+    image: mongodb/mongodb-enterprise-server:8.0.5-ubuntu2204
+    container_name: shard_mongodb_shard1_db1
+    command: mongod --shardsvr --bind_ip_all --replSet rs1  --port 27017
+    volumes:
+      - mongodb_vol_shard1_db1:/data/db
+    networks:
+      - mongodb_network
+
+  shard1_database2:
+    image: mongodb/mongodb-enterprise-server:8.0.5-ubuntu2204
+    container_name: shard_mongodb_shard1_db2
+    command: mongod --shardsvr --bind_ip_all --replSet rs1 --port 27017
+    volumes:
+      - mongodb_vol_shard1_db2:/data/db
+    networks:
+      - mongodb_network
+
+  shard1_database3:
+    image: mongodb/mongodb-enterprise-server:8.0.5-ubuntu2204
+    container_name: shard_mongodb_shard1_db3
+    command: mongod --shardsvr --bind_ip_all --replSet rs1 --port 27017
+    volumes:
+      - mongodb_vol_shard1_db3:/data/db
+    networks:
+      - mongodb_network
+
+
+  shard2_database1:
+    image: mongodb/mongodb-enterprise-server:8.0.5-ubuntu2204
+    container_name: shard_mongodb_shard2_db1
+    command: mongod --shardsvr --bind_ip_all --replSet rs2 --port 27017
+    volumes:
+      - mongodb_vol_shard2_db1:/data/db
+    networks:
+      - mongodb_network
+
+  shard2_database2:
+    image: mongodb/mongodb-enterprise-server:8.0.5-ubuntu2204
+    container_name: shard_mongodb_shard2_db2
+    command: mongod --shardsvr --bind_ip_all --replSet rs2 --port 27017
+    volumes:
+      - mongodb_vol_shard2_db2:/data/db
+    networks:
+      - mongodb_network
+
+  shard2_database3:
+    image: mongodb/mongodb-enterprise-server:8.0.5-ubuntu2204
+    container_name: shard_mongodb_shard2_db3
+    command: mongod --shardsvr --bind_ip_all --replSet rs2 --port 27017
+    volumes:
+      - mongodb_vol_shard2_db3:/data/db
+    networks:
+      - mongodb_network
+
+  mongos1:
+    image: mongodb/mongodb-enterprise-server:8.0.5-ubuntu2204
+    container_name: shard_mongodb_mongos1
+    command: mongos --bind_ip_all --port 27017 --configdb cfg1/config1:27017,config2:27017,config3:27017
+    volumes:
+      - mongodb_vol_mongos:/data/db
+    networks:
+      - mongodb_network
+
+networks:
+  mongodb_network:
+
+volumes:
+  mongodb_vol_cfg1:
+  mongodb_vol_cfg2:
+  mongodb_vol_cfg3:
+  mongodb_vol_mongos:
+  mongodb_vol_shard1_db1:
+  mongodb_vol_shard1_db2:
+  mongodb_vol_shard1_db3:
+  mongodb_vol_shard2_db1:
+  mongodb_vol_shard2_db2:
+  mongodb_vol_shard2_db3:

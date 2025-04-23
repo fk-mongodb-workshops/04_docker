@@ -1,0 +1,2 @@
+docker cp db_stats.js replicaset_mongosh:/db_stats.js
+docker exec replicaset_mongosh /usr/local/bin/mongosh mongodb://database1:27017,database2:27017,database3:27017/?replicaSet=rs1 --file /db_stats.js
