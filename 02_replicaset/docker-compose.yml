@@ -12,7 +12,9 @@ services:
   database1:
     image: mongodb/mongodb-enterprise-server:8.0.5-ubuntu2204
     container_name: replicaset_mongodb1
-    command: --bind_ip_all --replSet rs1
+    command: --bind_ip_all --replSet rs1 --port 27017
+    ports:
+      - 27017:27017
     volumes:
       - mongodb_vol1:/data/db
     networks:
@@ -21,7 +23,9 @@ services:
   database2:
     image: mongodb/mongodb-enterprise-server:8.0.5-ubuntu2204
     container_name: replicaset_mongodb2
-    command: --bind_ip_all --replSet rs1
+    command: --bind_ip_all --replSet rs1 --port 27018
+    ports:
+      - 27018:27018
     volumes:
       - mongodb_vol2:/data/db
     networks:
@@ -30,7 +34,9 @@ services:
   database3:
     image: mongodb/mongodb-enterprise-server:8.0.5-ubuntu2204
     container_name: replicaset_mongodb3
-    command: --bind_ip_all --replSet rs1
+    command: --bind_ip_all --replSet rs1 --port 27019
+    ports:
+      - 27019:27019
     volumes:
       - mongodb_vol3:/data/db
     networks:

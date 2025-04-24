@@ -1,2 +1,2 @@
 docker cp rs_status.js replicaset_mongosh:/rs_status.js
-docker exec replicaset_mongosh /usr/local/bin/mongosh mongodb://database1:27017,database2:27017,database3:27017/?replicaSet=rs1 --file /rs_status.js
+docker exec replicaset_mongosh /usr/local/bin/mongosh mongodb://database1:27017,database2:27018,database3:27019/?replicaSet=rs1 --file /rs_status.js

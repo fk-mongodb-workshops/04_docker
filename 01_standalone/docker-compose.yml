@@ -13,6 +13,8 @@ services:
     image: mongodb/mongodb-enterprise-server:8.0.5-ubuntu2204
     command: --bind_ip_all
     container_name: standalone_mongodb
+    ports:
+      - 27017:27017
     volumes:
       - mongodb_vol:/data/db
     networks:
